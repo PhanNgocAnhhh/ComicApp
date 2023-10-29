@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="green">#186F65</color>
+    <color name="blue">#9EDDFF</color>
+    <color name="purple">#713ABE</color>
+    <color name="gray">#7D7C7C</color>
+    <color name="color_line">#8B6D6D</color>
+    <color name="btn_read_comic">#3e5c76</color>
+    <color name="my_primary">#489fb5</color>
+    <color name="my_secondary">#16697a</color>
+</resources>
