@@ -1,8 +1,9 @@
 package Model;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Comic {
+public class Comic  implements Serializable {
 
     public String id;
     public String name;

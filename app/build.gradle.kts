@@ -34,6 +34,7 @@ android {
 
 dependencies {
 
+    //noinspection GradleCompatible
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.10.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
@@ -42,7 +43,7 @@ dependencies {
     implementation("com.google.firebase:firebase-database")
     // Thư viện load ảnh Picasso
     implementation ("com.squareup.picasso:picasso:2.5.2")
-
+    // PhotoView trong ViewPager
 
     implementation ("com.github.denzcoskun:ImageSlideshow:0.1.2")
 

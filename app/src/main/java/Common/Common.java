@@ -10,8 +10,10 @@ public class Common {
     public static List<Comic> comicList = new ArrayList<>();
     public static Comic comicSelected;
 
-//    public static Chapter chapterSelected;
+    public static Chapter chapterSelected;
 
     public static List<Chapter> chapterList;
+
+    public static int chapterIndex = -1;
 
 }

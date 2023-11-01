@@ -5,5 +5,5 @@ import java.util.List;
 import Model.Comic;
 
 public interface IComicLoadDone {
-    void onComicLoadDoneList(List<Comic> comicList);
+    void onComicLoadDoneListener(List<Comic> comicList);
 }

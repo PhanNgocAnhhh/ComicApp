@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
+
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -13,26 +14,31 @@
         android:supportsRtl="true"
         android:theme="@style/Base.Theme.ComicApp"
         tools:targetApi="31">
+
         <activity
             android:name=".SplashScreen"
             android:exported="true">
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
-        <meta-data
-            android:name="Android.app.lib.name"
-            android:value=""/>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+            <meta-data
+                android:name="Android.app.lib.name"
+                android:value="" />
         </activity>
         <activity
             android:name=".MainActivity"
             android:exported="false">
             <meta-data
                 android:name="Android.app.lib.name"
-                android:value=""/>
+                android:value="" />
         </activity>
-        <activity android:name="ViewComicDetails">
-        </activity>
+        <activity android:name=".ViewComicDetails" />
+        <activity
+            android:name=".ViewChapter"
+            android:exported="false" />
     </application>
+
 </manifest>

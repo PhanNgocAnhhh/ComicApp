@@ -4,6 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 import com.denzcoskun.imageslider.ImageSlider;
@@ -21,17 +23,21 @@ import Common.Common;
 import Interface.IComicLoadDone;
 import Model.Comic;
 
-public class MainActivity extends AppCompatActivity implements IComicLoadDone {
+public class MainActivity extends AppCompatActivity implements ComicAdapter.OnItemMangaClick {
 
 
     ImageSlider mainslider;
     RecyclerView recyclerComic;
-    TextView textComic;
 
     //Database
-    DatabaseReference comics;
+    DatabaseReference databaseReference;
     // Listener
     IComicLoadDone comicListener;
+
+    // Adapter
+    ComicAdapter adapter;
+
+    List<Comic> comic;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,11 +45,10 @@ public class MainActivity extends AppCompatActivity implements IComicLoadDone {
         setContentView(R.layout.activity_main);
 
         // Init Database
-        comics =FirebaseDatabase.getInstance().getReference().child("Comic");
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("Comic");
 
         // Ánh xạ
         mainslider = findViewById(R.id.image_slider);
-
 
         // Lấy dữ liệu Banner trên Realtime Database
         final List<SlideModel> bannerLoad = new ArrayList<>();
@@ -56,20 +61,14 @@ public class MainActivity extends AppCompatActivity implements IComicLoadDone {
                     mainslider.setImageList(bannerLoad,ScaleTypes.CENTER_CROP);
 
                 }
-
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
         });
 
-        // Init Listener
-        comicListener = this;
-        recyclerComic = findViewById(R.id.recycler_view);
-        recyclerComic.setHasFixedSize(true);
-        recyclerComic.setLayoutManager(new GridLayoutManager(this,2));
+
 
         // Load dữ liệu từ FireBase về
         loadComic();
@@ -78,16 +77,15 @@ public class MainActivity extends AppCompatActivity implements IComicLoadDone {
 
     // Hàm lấy dữ liệu Comic trên RealTimeDatabase
     private void loadComic(){
-
-        comics.addValueEventListener(new ValueEventListener() {
+        comic = new ArrayList<>();
+        databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                List<Comic> comicLoad = new ArrayList<>();
                 for (DataSnapshot data: snapshot.getChildren()){
-                    Comic comic =data.getValue(Comic.class);
-                    comicLoad.add(comic);
+                    Comic comicload =data.getValue(Comic.class);
+                    comic.add(comicload);
                 }
-                comicListener.onComicLoadDoneList(comicLoad);
+                setComicAdapter(comic);
             }
 
             @Override
@@ -97,13 +95,20 @@ public class MainActivity extends AppCompatActivity implements IComicLoadDone {
         });
 
     }
+    private void setComicAdapter(List<Comic> comic) {
 
-    // Lưu dữ liệu từ FireBase vào comicList và hiển thị dữ liệu lên RecycLerView
-    @Override
-    public void onComicLoadDoneList(List<Comic> comicList) {
-        Common.comicList = comicList;
-        recyclerComic.setAdapter( new ComicAdapter(getBaseContext(),comicList));
-
+        // RecyclerView
+        recyclerComic = findViewById(R.id.recycler_view);
+        recyclerComic.setLayoutManager(new GridLayoutManager(this,2));
+        adapter = new ComicAdapter(MainActivity.this, comic, this);
+        recyclerComic.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
     }
 
+    @Override
+    public void onMangaItemClick(int clickedItemIndex) {
+        Intent intent = new Intent(MainActivity.this, ViewComicDetails.class);
+        intent.putExtra("comic", comic.get(clickedItemIndex));
+        startActivity(intent);
+    }
 }

@@ -1,5 +1,16 @@
 package com.example.comicapp;
 
-public class ViewChapter {
+import androidx.appcompat.app.AppCompatActivity;
 
+import android.os.Bundle;
+
+public class ViewChapter extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_view_chapter);
+
+    }
 }

@@ -1,8 +1,9 @@
 package Model;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Chapter {
+public class Chapter  implements Serializable {
     public String Name;
     public List<String> link;
 
