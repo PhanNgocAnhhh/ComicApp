@@ -10,7 +10,7 @@ public class Comic  implements Serializable {
     public String image;
     public String category;
     public String description;
-    public List<Chapter> chapters;
+    public List<Chapter> chapter; //chapter cho nay thua chu s
 
     public Comic() {
     }
@@ -21,7 +21,7 @@ public class Comic  implements Serializable {
         this.image = image;
         this.category = category;
         this.description = description;
-        this.chapters = chapters;
+        this.chapter = chapters;
     }
 
     public String getId() {
@@ -65,10 +65,10 @@ public class Comic  implements Serializable {
     }
 
     public List<Chapter> getChapters() {
-        return chapters;
+        return chapter;
     }
 
     public void setChapters(List<Chapter> chapters) {
-        this.chapters = chapters;
+        this.chapter = chapters;
     }
 }

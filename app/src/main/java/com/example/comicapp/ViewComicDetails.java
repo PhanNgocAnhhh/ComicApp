@@ -73,6 +73,7 @@ public class ViewComicDetails extends AppCompatActivity implements ChapterAdapte
 
         // Click button back
         btnBack.setOnClickListener(view -> finish());
+
         // Click Vào Button " Đọc truyện"
         btnReadComic.setOnClickListener( view ->{
             Intent intent = new Intent(this, ViewChapter.class);
@@ -80,18 +81,6 @@ public class ViewComicDetails extends AppCompatActivity implements ChapterAdapte
         });
         
         LoadDetails();
-
-//        // Hiển thị view
-//        // Tên truyện
-//        tvName.setText(getIntent().getExtras().getString("name"));
-//        // Mô tả
-//        tvDescription.setText(getIntent().getExtras().getString("description"));
-//        // Poster
-//        String imageUrl = getIntent().getStringExtra("image_url");
-//        Picasso.get().load(imageUrl).into(ivPosterComic);
-        // Chapter
-
-
     }
     // Hiển thị view
     private void LoadDetails() {
@@ -109,6 +98,7 @@ public class ViewComicDetails extends AppCompatActivity implements ChapterAdapte
         rcvChapter.setAdapter(adapter);
     }
 
+    // Xử lý click vào chapter
     @Override
     public void onChapterItemClick(int clickedItemIndex) {
         Intent intent = new Intent(ViewComicDetails.this, ViewChapter.class);

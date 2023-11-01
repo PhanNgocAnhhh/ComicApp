@@ -2,9 +2,12 @@ package com.example.comicapp;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
@@ -68,8 +71,6 @@ public class MainActivity extends AppCompatActivity implements ComicAdapter.OnIt
             }
         });
 
-
-
         // Load dữ liệu từ FireBase về
         loadComic();
 
@@ -111,4 +112,5 @@ public class MainActivity extends AppCompatActivity implements ComicAdapter.OnIt
         intent.putExtra("comic", comic.get(clickedItemIndex));
         startActivity(intent);
     }
+
 }
