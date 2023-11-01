@@ -77,6 +77,7 @@ public class ViewComicDetails extends AppCompatActivity implements ChapterAdapte
         // Click Vào Button " Đọc truyện"
         btnReadComic.setOnClickListener( view ->{
             Intent intent = new Intent(this, ViewChapter.class);
+            intent.putExtra("chapter", listChapter.get(0));
             startActivity(intent);
         });
         
