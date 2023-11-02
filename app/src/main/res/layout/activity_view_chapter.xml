@@ -51,26 +51,26 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.viewpager.widget.ViewPager
-            android:id="@+id/viewPager"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/viewPager"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_alignParentBottom="true"
             android:orientation="horizontal">
-<!--            <SeekBar-->
-<!--                android:id="@+id/SeekbarManga"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="match_parent"-->
-<!--                android:progress="3"-->
-<!--                android:maxHeight="5dp"-->
-<!--                android:progressDrawable="@drawable/custom_seekbar"-->
-<!--                android:background="@drawable/custom_stroke"-->
-<!--                android:thumb="@drawable/thumb_process_bar"-->
-<!--                />-->
+            <!--            <SeekBar-->
+            <!--                android:id="@+id/SeekbarManga"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="match_parent"-->
+            <!--                android:progress="3"-->
+            <!--                android:maxHeight="5dp"-->
+            <!--                android:progressDrawable="@drawable/custom_seekbar"-->
+            <!--                android:background="@drawable/custom_stroke"-->
+            <!--                android:thumb="@drawable/thumb_process_bar"-->
+            <!--                />-->
         </LinearLayout>
     </RelativeLayout>
 

@@ -45,11 +45,14 @@ dependencies {
     implementation ("com.squareup.picasso:picasso:2.5.2")
     // PhotoView trong ViewPager
     implementation ("com.github.chrisbanes:PhotoView:2.0.0")
-
     // Banner
     implementation ("com.github.denzcoskun:ImageSlideshow:0.1.2")
+    // Circle Image view
+    implementation ("de.hdodenhof:circleimageview:3.1.0")
 
     implementation ("com.wajahatkarim:EasyFlipView:3.0.3")
+    implementation("androidx.legacy:legacy-support-v4:1.0.0")
+    implementation("androidx.drawerlayout:drawerlayout:1.2.0")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")

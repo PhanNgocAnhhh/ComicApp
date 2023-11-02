@@ -1,15 +1,22 @@
 package com.example.comicapp;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
+import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.denzcoskun.imageslider.ImageSlider;
 import com.denzcoskun.imageslider.constants.ScaleTypes;
@@ -30,17 +37,21 @@ public class MainActivity extends AppCompatActivity implements ComicAdapter.OnIt
 
 
     ImageSlider mainslider;
+
+    // Layout
     RecyclerView recyclerComic;
-    SearchView searchView;
+    DrawerLayout drawerLayout;
+
 
     //Database
     DatabaseReference databaseReference;
-    // Listener
 
     // Adapter
     ComicAdapter comicadapter;
 
     List<Comic> comic;
+    SearchView searchView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,8 +61,18 @@ public class MainActivity extends AppCompatActivity implements ComicAdapter.OnIt
         // Init Database
         databaseReference = FirebaseDatabase.getInstance().getReference().child("Comic");
 
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
         // Ánh xạ
         mainslider = findViewById(R.id.image_slider);
+        drawerLayout = findViewById(R.id.drawerLayout);
+
+        // Xử lý click vào Toolbar
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout ,toolbar,
+                R.string.nav_drawer_open,R.string.nav_drawer_close);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
 
         // Lấy dữ liệu Banner trên Realtime Database
         final List<SlideModel> bannerLoad = new ArrayList<>();
@@ -71,8 +92,6 @@ public class MainActivity extends AppCompatActivity implements ComicAdapter.OnIt
 
         // Load dữ liệu từ FireBase về
         loadComic();
-        // Tìm kiếm truyên
-        Search();
 
     }
 
@@ -115,30 +134,34 @@ public class MainActivity extends AppCompatActivity implements ComicAdapter.OnIt
         startActivity(intent);
     }
 
-    // Tìm kiếm tên truyện
-    private void Search() {
-        searchView = findViewById(R.id.edtSearch);
-        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
 
+        // Tìm kiếm dữ liệu trên Toolbar
+        getMenuInflater().inflate(R.menu.search, menu);
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.setMaxWidth(Integer.MAX_VALUE);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 comicadapter.getFilter().filter(query);
-//                getFilterComic(query);
+                getFilterComic(query);
                 return false;
             }
-
             @Override
             public boolean onQueryTextChange(String newText) {
                 comicadapter.getFilter().filter(newText);
-//                getFilterComic(newText);
+                getFilterComic(newText);
                 return false;
             }
         });
+
+        return true;
     }
 
-    // Xử lý khi click vào back không thoát App
+//     Xử lý khi click vào nút back trên thiết bị để không thoát App
     @Override
     public void onBackPressed() {
         if (! searchView.isIconified()){
@@ -146,30 +169,30 @@ public class MainActivity extends AppCompatActivity implements ComicAdapter.OnIt
             return;
         }
         super.onBackPressed();
-    };
+    }
 
     // Lọc và tìm kiếm dữ liệu trên Realtime Database
-//    private void getFilterComic(String query) {
-//        databaseReference= FirebaseDatabase.getInstance().getReference("Comic");
-//        databaseReference.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                if(comic.size()!=0)
-//                    comic.clear();
-//                for (DataSnapshot data : snapshot.getChildren()) {
-//                 Comic comicLoad = data.getValue(Comic.class);
-//                    if(comicLoad.getName().toLowerCase().contains(query)){
-////                        String[] category = Objects.requireNonNull(manga).getCategory().split("/");
-//                        comic.add(comicLoad);
-//                    }
-//                }
-//                setComicAdapter(comic);
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//            }
-//        });
-//    }
+    private void getFilterComic(String query) {
+        databaseReference= FirebaseDatabase.getInstance().getReference("Comic");
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(comic.size()!=0)
+                    comic.clear();
+                for (DataSnapshot data : snapshot.getChildren()) {
+                 Comic comicLoad = data.getValue(Comic.class);
+                    if(comicLoad.getName().toLowerCase().contains(query)){
+//                        String[] category = Objects.requireNonNull(manga).getCategory().split("/");
+                        comic.add(comicLoad);
+                    }
+                }
+                setComicAdapter(comic);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
+    }
 
 }
