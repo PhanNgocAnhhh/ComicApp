@@ -1,8 +1,6 @@
 package com.example.comicapp;
-
-import static Common.Common.*;
-
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
@@ -10,40 +8,34 @@ import android.widget.ImageView;
 
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.database.DatabaseReference;
+
 import com.squareup.picasso.Picasso;
-
-
 import java.util.List;
+import java.util.Objects;
 
 import Adapter.ChapterAdapter;
-import Common.Common;
 
+import Adapter.ComicAdapter;
 import Model.Chapter;
 import Model.Comic;
 
 public class ViewComicDetails extends AppCompatActivity implements ChapterAdapter.OnItemChapterClick  {
-
-
     //View
     Button btnReadComic;
-    ImageView ivPosterComic;
+    ImageView ivPosterComic,ivBannerComic;
     ImageView btnBack;
     TextView tvDescription, tvName;
     RecyclerView rcvChapter;
     LinearLayoutManager layoutManager;
 
-
-
     // Adapter
-    ChapterAdapter adapter;
-
+    ChapterAdapter chapteradapter;
     //Database
-    DatabaseReference reference;
-    //
 
     Comic comic;
     List<Chapter> listChapter;
@@ -57,13 +49,13 @@ public class ViewComicDetails extends AppCompatActivity implements ChapterAdapte
         // Nhận dữ liệu
         comic = (Comic) getIntent().getSerializableExtra("comic");
 
-
         // Ánh xạ
         btnReadComic = findViewById(R.id.btn_read_comic);
         ivPosterComic = findViewById(R.id.img_poster_comic);
         btnBack = findViewById(R.id.btn_back);
         tvDescription = findViewById(R.id.tv_description);
         tvName = findViewById(R.id.tv_name_comic);
+        ivBannerComic = findViewById(R.id.img_banner2_comic);
 
         // RecyclerView
         rcvChapter = findViewById(R.id.rcv_chapter);
@@ -85,6 +77,8 @@ public class ViewComicDetails extends AppCompatActivity implements ChapterAdapte
     }
     // Hiển thị view
     private void LoadDetails() {
+        // Banner
+//        Picasso.get().load(comic.getBanner()).into(ivBannerComic);
         // Ảnh
         Picasso.get().load(comic.getImage()).into(ivPosterComic);
         // Tên Truyện
@@ -93,12 +87,11 @@ public class ViewComicDetails extends AppCompatActivity implements ChapterAdapte
         tvDescription.setText(comic.getDescription());
         // Chapter
         listChapter = comic.getChapters();
-        adapter = new ChapterAdapter(this, listChapter, this);
-        adapter.notifyDataSetChanged();
+        chapteradapter = new ChapterAdapter(this, listChapter, this);
+        chapteradapter.notifyDataSetChanged();
         rcvChapter.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
-        rcvChapter.setAdapter(adapter);
+        rcvChapter.setAdapter(chapteradapter);
     }
-
     // Xử lý click vào chapter
     @Override
     public void onChapterItemClick(int clickedItemIndex) {
@@ -106,4 +99,5 @@ public class ViewComicDetails extends AppCompatActivity implements ChapterAdapte
         intent.putExtra("chapter", listChapter.get(clickedItemIndex));
         startActivity(intent);
     }
+
 }

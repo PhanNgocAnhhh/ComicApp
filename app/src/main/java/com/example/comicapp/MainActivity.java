@@ -21,9 +21,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+
 import Adapter.ComicAdapter;
-import Common.Common;
-import Interface.IComicLoadDone;
 import Model.Comic;
 
 public class MainActivity extends AppCompatActivity implements ComicAdapter.OnItemMangaClick {
@@ -31,14 +31,14 @@ public class MainActivity extends AppCompatActivity implements ComicAdapter.OnIt
 
     ImageSlider mainslider;
     RecyclerView recyclerComic;
+    SearchView searchView;
 
     //Database
     DatabaseReference databaseReference;
     // Listener
-    IComicLoadDone comicListener;
 
     // Adapter
-    ComicAdapter adapter;
+    ComicAdapter comicadapter;
 
     List<Comic> comic;
 
@@ -60,9 +60,7 @@ public class MainActivity extends AppCompatActivity implements ComicAdapter.OnIt
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot data: snapshot.getChildren()){
                     bannerLoad.add( new SlideModel(data.child("url").getValue().toString(),ScaleTypes.CENTER_CROP));
-
                     mainslider.setImageList(bannerLoad,ScaleTypes.CENTER_CROP);
-
                 }
             }
             @Override
@@ -73,6 +71,8 @@ public class MainActivity extends AppCompatActivity implements ComicAdapter.OnIt
 
         // Load dữ liệu từ FireBase về
         loadComic();
+        // Tìm kiếm truyên
+        Search();
 
     }
 
@@ -97,13 +97,12 @@ public class MainActivity extends AppCompatActivity implements ComicAdapter.OnIt
 
     }
     private void setComicAdapter(List<Comic> comic) {
-
         // RecyclerView
         recyclerComic = findViewById(R.id.recycler_view);
         recyclerComic.setLayoutManager(new GridLayoutManager(this,2));
-        adapter = new ComicAdapter(MainActivity.this, comic, this);
-        recyclerComic.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
+        comicadapter = new ComicAdapter(MainActivity.this, comic, this);
+        recyclerComic.setAdapter(comicadapter);
+        comicadapter.notifyDataSetChanged();
     }
 
     @Override
@@ -111,6 +110,53 @@ public class MainActivity extends AppCompatActivity implements ComicAdapter.OnIt
         Intent intent = new Intent(MainActivity.this, ViewComicDetails.class);
         intent.putExtra("comic", comic.get(clickedItemIndex));
         startActivity(intent);
+    }
+
+    // Tìm kiếm tên truyện
+    private void Search() {
+        searchView = findViewById(R.id.edtSearch);
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                comicadapter.getFilter().filter(query);
+                getFilterComic(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                comicadapter.getFilter().filter(newText);
+                getFilterComic(newText);
+                return false;
+            }
+        });
+    }
+
+    // Hàm lấy tên truyện
+    private void getFilterComic(String query) {
+        databaseReference= FirebaseDatabase.getInstance().getReference("Comic");
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(comic.size()!=0)
+                    comic.clear();
+                for (DataSnapshot data : snapshot.getChildren()) {
+                 Comic comicLoad = data.getValue(Comic.class);
+                    if(comicLoad.getName().toLowerCase().contains(query)){
+//                        String[] category = Objects.requireNonNull(manga).getCategory().split("/");
+                        comic.add(comicLoad);
+                    }
+                }
+                setComicAdapter(comic);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
     }
 
 }

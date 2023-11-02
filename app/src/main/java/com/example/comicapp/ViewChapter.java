@@ -27,6 +27,7 @@ public class ViewChapter extends AppCompatActivity implements View.OnClickListen
 
         // Nhận dữ liệu
         chapter = (Chapter) getIntent().getSerializableExtra("chapter");
+
         // Ánh xạ
         viewPager = findViewById(R.id.viewPager);
         txtChapterName = findViewById(R.id.txtCurrentChapter);
@@ -52,11 +53,5 @@ public class ViewChapter extends AppCompatActivity implements View.OnClickListen
 
     @Override
     public void onClick(View v) {
-//        switch (v.getId()) {
-//            case R.id.chapter_back:
-//                Toast.makeText(this, "BACK", Toast.LENGTH_SHORT).show();
-//                finish();
-//                break;
-//        }
     }
 }

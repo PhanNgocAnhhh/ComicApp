@@ -13,21 +13,32 @@
         android:background="#3e5c76"
         android:gravity="center">
 
-        <EditText
-            android:id="@+id/editTextText"
+<!--        <EditText-->
+<!--            android:id="@+id/editTextText"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_marginLeft="80dp"-->
+<!--            android:layout_marginTop="5dp"-->
+<!--            android:layout_marginRight="80dp"-->
+<!--            android:layout_marginBottom="5dp"-->
+<!--            android:background="@drawable/bg_edit"-->
+<!--            android:ems="10"-->
+<!--            android:gravity="center"-->
+<!--            android:hint="Tên truyện,Thể loại"-->
+<!--            android:inputType="text"-->
+<!--            android:textColorHint="#A19D9D"-->
+<!--            android:textSize="20sp" />-->
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/edtSearch"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="80dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginRight="80dp"
-            android:layout_marginBottom="5dp"
-            android:background="@drawable/bg_edit"
-            android:ems="10"
-            android:gravity="center"
-            android:hint="Tên truyện,Thể loại"
-            android:inputType="text"
-            android:textColorHint="#A19D9D"
-            android:textSize="20sp" />
+            android:layout_height="50dp"
+            android:background="@drawable/bg_search"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="3dp"
+            app:queryHint="Search"
+            android:padding="10dp"/>
     </RelativeLayout>
 
     <com.denzcoskun.imageslider.ImageSlider

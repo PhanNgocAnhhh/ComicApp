@@ -25,14 +25,13 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
-import Common.Common;
-import Interface.IRecyclerItemClickListener;
 import Model.Comic;
 
 public class ComicAdapter extends RecyclerView.Adapter<ComicAdapter.MyViewHolder> implements Filterable {
 
     Context context;
     List<Comic> comicList;
+    List<Comic> comicOld;
 
     final private OnItemMangaClick OnClick;
 
@@ -45,8 +44,34 @@ public class ComicAdapter extends RecyclerView.Adapter<ComicAdapter.MyViewHolder
     // Tìm kiếm tên truyện
     @Override
     public Filter getFilter() {
-        return null;
+
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                String strSearch = constraint.toString();
+                if(strSearch.isEmpty()){
+                    comicList = comicOld;
+                }else{
+                    List<Comic> list = new ArrayList<>();
+                    for(Comic comic :comicOld)
+                        if(comic.getName().toLowerCase().contains(strSearch.toLowerCase()))
+                            list.add(comic);
+
+                    comicList = list;
+                }
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = comicList;
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+               comicList = (List<Comic>) results.values;
+                notifyDataSetChanged();
+            }
+        };
     }
+
 
     @NonNull
     @Override
@@ -74,7 +99,6 @@ public class ComicAdapter extends RecyclerView.Adapter<ComicAdapter.MyViewHolder
     public int getItemCount() {
         return comicList.size();
     }
-
 
     public static interface OnItemMangaClick{
         void onMangaItemClick(int clickedItemIndex);

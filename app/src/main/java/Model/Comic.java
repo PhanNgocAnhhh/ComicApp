@@ -7,6 +7,7 @@ public class Comic  implements Serializable {
 
     public String id;
     public String name;
+    public String banner;
     public String image;
     public String category;
     public String description;
@@ -15,9 +16,10 @@ public class Comic  implements Serializable {
     public Comic() {
     }
 
-    public Comic(String id, String name, String image, String category, String description, List<Chapter> chapters) {
+    public Comic(String id, String name, String banner, String image, String category, String description, List<Chapter> chapters) {
         this.id = id;
         this.name = name;
+        this.banner = banner;
         this.image = image;
         this.category = category;
         this.description = description;
@@ -71,4 +73,13 @@ public class Comic  implements Serializable {
     public void setChapters(List<Chapter> chapters) {
         this.chapter = chapters;
     }
+
+    public String getBanner() {
+        return banner;
+    }
+
+    public void setBanner(String banner) {
+        this.banner = banner;
+    }
+
 }

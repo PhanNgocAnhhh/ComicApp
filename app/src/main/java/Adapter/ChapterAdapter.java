@@ -16,10 +16,6 @@ import com.example.comicapp.ViewChapter;
 
 
 import java.util.List;
-
-
-import Common.Common;
-import Interface.IRecyclerItemClickListener;
 import Model.Chapter;
 
 
