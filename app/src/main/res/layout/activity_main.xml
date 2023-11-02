@@ -32,13 +32,13 @@
             android:id="@+id/edtSearch"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="@drawable/bg_search"
             android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
             android:layout_marginTop="3dp"
+            android:layout_marginEnd="10dp"
             android:layout_marginBottom="3dp"
-            app:queryHint="Search"
-            android:padding="10dp"/>
+            android:background="@drawable/bg_search"
+            android:padding="10dp"
+            app:queryHint="Search" />
     </RelativeLayout>
 
     <com.denzcoskun.imageslider.ImageSlider

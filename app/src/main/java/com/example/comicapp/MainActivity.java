@@ -80,15 +80,17 @@ public class MainActivity extends AppCompatActivity implements ComicAdapter.OnIt
     private void loadComic(){
         comic = new ArrayList<>();
         databaseReference.addValueEventListener(new ValueEventListener() {
+
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(comic.size()!=0)
+                    comic.clear();
                 for (DataSnapshot data: snapshot.getChildren()){
                     Comic comicload =data.getValue(Comic.class);
                     comic.add(comicload);
                 }
                 setComicAdapter(comic);
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
@@ -96,6 +98,7 @@ public class MainActivity extends AppCompatActivity implements ComicAdapter.OnIt
         });
 
     }
+    // Adapter
     private void setComicAdapter(List<Comic> comic) {
         // RecyclerView
         recyclerComic = findViewById(R.id.recycler_view);
@@ -122,41 +125,51 @@ public class MainActivity extends AppCompatActivity implements ComicAdapter.OnIt
             @Override
             public boolean onQueryTextSubmit(String query) {
                 comicadapter.getFilter().filter(query);
-                getFilterComic(query);
+//                getFilterComic(query);
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
                 comicadapter.getFilter().filter(newText);
-                getFilterComic(newText);
+//                getFilterComic(newText);
                 return false;
             }
         });
     }
 
-    // Hàm lấy tên truyện
-    private void getFilterComic(String query) {
-        databaseReference= FirebaseDatabase.getInstance().getReference("Comic");
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(comic.size()!=0)
-                    comic.clear();
-                for (DataSnapshot data : snapshot.getChildren()) {
-                 Comic comicLoad = data.getValue(Comic.class);
-                    if(comicLoad.getName().toLowerCase().contains(query)){
-//                        String[] category = Objects.requireNonNull(manga).getCategory().split("/");
-                        comic.add(comicLoad);
-                    }
-                }
-                setComicAdapter(comic);
-            }
+    // Xử lý khi click vào back không thoát App
+    @Override
+    public void onBackPressed() {
+        if (! searchView.isIconified()){
+            searchView.setIconified(true);
+            return;
+        }
+        super.onBackPressed();
+    };
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-            }
-        });
-    }
+    // Lọc và tìm kiếm dữ liệu trên Realtime Database
+//    private void getFilterComic(String query) {
+//        databaseReference= FirebaseDatabase.getInstance().getReference("Comic");
+//        databaseReference.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                if(comic.size()!=0)
+//                    comic.clear();
+//                for (DataSnapshot data : snapshot.getChildren()) {
+//                 Comic comicLoad = data.getValue(Comic.class);
+//                    if(comicLoad.getName().toLowerCase().contains(query)){
+////                        String[] category = Objects.requireNonNull(manga).getCategory().split("/");
+//                        comic.add(comicLoad);
+//                    }
+//                }
+//                setComicAdapter(comic);
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//            }
+//        });
+//    }
 
 }

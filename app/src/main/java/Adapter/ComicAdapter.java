@@ -31,13 +31,14 @@ public class ComicAdapter extends RecyclerView.Adapter<ComicAdapter.MyViewHolder
 
     Context context;
     List<Comic> comicList;
-    List<Comic> comicOld;
+    List<Comic> comicListOld;
 
     final private OnItemMangaClick OnClick;
 
     public ComicAdapter(Context context, List<Comic> comicList,OnItemMangaClick OnClick) {
         this.context = context;
         this.comicList = comicList;
+        this.comicListOld = comicList;
         this.OnClick = OnClick;
 
     }
@@ -50,10 +51,12 @@ public class ComicAdapter extends RecyclerView.Adapter<ComicAdapter.MyViewHolder
             protected FilterResults performFiltering(CharSequence constraint) {
                 String strSearch = constraint.toString();
                 if(strSearch.isEmpty()){
-                    comicList = comicOld;
+                    comicList = comicListOld;
                 }else{
                     List<Comic> list = new ArrayList<>();
-                    for(Comic comic :comicOld)
+                    for(Comic comic :comicListOld)
+
+                        // Thêm danh sách truyênh tìm kiếm vào ComicListOld khônng phân biệt kí tự hoa
                         if(comic.getName().toLowerCase().contains(strSearch.toLowerCase()))
                             list.add(comic);
 
