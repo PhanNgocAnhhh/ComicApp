@@ -33,9 +33,9 @@ public class ComicAdapter extends RecyclerView.Adapter<ComicAdapter.MyViewHolder
     List<Comic> comicList;
     List<Comic> comicListOld;
 
-    final private OnItemMangaClick OnClick;
+    final private OnItemComicClick OnClick;
 
-    public ComicAdapter(Context context, List<Comic> comicList,OnItemMangaClick OnClick) {
+    public ComicAdapter(Context context, List<Comic> comicList,OnItemComicClick OnClick) {
         this.context = context;
         this.comicList = comicList;
         this.comicListOld = comicList;
@@ -103,8 +103,8 @@ public class ComicAdapter extends RecyclerView.Adapter<ComicAdapter.MyViewHolder
         return comicList.size();
     }
 
-    public static interface OnItemMangaClick{
-        void onMangaItemClick(int clickedItemIndex);
+    public static interface OnItemComicClick{
+        void onItemComicClick(int clickedItemIndex);
     }
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
          TextView comic_name;
@@ -121,7 +121,7 @@ public class ComicAdapter extends RecyclerView.Adapter<ComicAdapter.MyViewHolder
         @Override
         public void onClick(View v) {
             int clickedPosition = getAdapterPosition();
-            OnClick.onMangaItemClick(clickedPosition);
+            OnClick.onItemComicClick(clickedPosition);
 
         }
     }

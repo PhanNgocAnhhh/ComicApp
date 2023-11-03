@@ -10,4 +10,6 @@
     <color name="btn_read_comic">#3e5c76</color>
     <color name="my_primary">#489fb5</color>
     <color name="my_secondary">#16697a</color>
+    <color name="toolbar">#3e5c76</color>
+
 </resources>

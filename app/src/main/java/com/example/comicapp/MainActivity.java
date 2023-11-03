@@ -21,6 +21,7 @@ import android.widget.TextView;
 import com.denzcoskun.imageslider.ImageSlider;
 import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.denzcoskun.imageslider.models.SlideModel;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -33,7 +34,7 @@ import java.util.Objects;
 import Adapter.ComicAdapter;
 import Model.Comic;
 
-public class MainActivity extends AppCompatActivity implements ComicAdapter.OnItemMangaClick {
+public class MainActivity extends AppCompatActivity implements ComicAdapter.OnItemComicClick, NavigationView.OnNavigationItemSelectedListener {
 
 
     ImageSlider mainslider;
@@ -53,6 +54,7 @@ public class MainActivity extends AppCompatActivity implements ComicAdapter.OnIt
     SearchView searchView;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,12 +69,18 @@ public class MainActivity extends AppCompatActivity implements ComicAdapter.OnIt
         // Ánh xạ
         mainslider = findViewById(R.id.image_slider);
         drawerLayout = findViewById(R.id.drawerLayout);
+        NavigationView navigationView =  findViewById(R.id.nav_view);
 
         // Xử lý click vào Toolbar
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout ,toolbar,
                 R.string.nav_drawer_open,R.string.nav_drawer_close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
+
+        // Navigation
+        navigationView.setNavigationItemSelectedListener(this);
+
+
 
         // Lấy dữ liệu Banner trên Realtime Database
         final List<SlideModel> bannerLoad = new ArrayList<>();
@@ -94,9 +102,8 @@ public class MainActivity extends AppCompatActivity implements ComicAdapter.OnIt
         loadComic();
 
     }
-
-    // Hàm lấy dữ liệu Comic trên RealTimeDatabase
-    private void loadComic(){
+        // Hàm lấy dữ liệu Comic trên RealTimeDatabase
+        private void loadComic(){
         comic = new ArrayList<>();
         databaseReference.addValueEventListener(new ValueEventListener() {
 
@@ -117,25 +124,27 @@ public class MainActivity extends AppCompatActivity implements ComicAdapter.OnIt
         });
 
     }
-    // Adapter
-    private void setComicAdapter(List<Comic> comic) {
+        // Adapter
+        private void setComicAdapter(List<Comic> comic) {
         // RecyclerView
         recyclerComic = findViewById(R.id.recycler_view);
         recyclerComic.setLayoutManager(new GridLayoutManager(this,2));
         comicadapter = new ComicAdapter(MainActivity.this, comic, this);
         recyclerComic.setAdapter(comicadapter);
         comicadapter.notifyDataSetChanged();
-    }
+        }
 
-    @Override
-    public void onMangaItemClick(int clickedItemIndex) {
+
+        // Xử lý click vào truyện tranh
+        @Override
+        public void onItemComicClick(int clickedItemIndex) {
         Intent intent = new Intent(MainActivity.this, ViewComicDetails.class);
         intent.putExtra("comic", comic.get(clickedItemIndex));
         startActivity(intent);
-    }
+        }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu){
+        @Override
+        public boolean onCreateOptionsMenu(Menu menu){
 
         // Tìm kiếm dữ liệu trên Toolbar
         getMenuInflater().inflate(R.menu.search, menu);
@@ -159,20 +168,20 @@ public class MainActivity extends AppCompatActivity implements ComicAdapter.OnIt
         });
 
         return true;
-    }
+        }
 
-//     Xử lý khi click vào nút back trên thiết bị để không thoát App
-    @Override
-    public void onBackPressed() {
+        // Xử lý khi click vào nút back trên thiết bị để không thoát App
+        @Override
+        public void onBackPressed() {
         if (! searchView.isIconified()){
             searchView.setIconified(true);
             return;
         }
         super.onBackPressed();
-    }
+        }
 
-    // Lọc và tìm kiếm dữ liệu trên Realtime Database
-    private void getFilterComic(String query) {
+        // Lọc và tìm kiếm dữ liệu trên Realtime Database
+        private void getFilterComic(String query) {
         databaseReference= FirebaseDatabase.getInstance().getReference("Comic");
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -193,6 +202,25 @@ public class MainActivity extends AppCompatActivity implements ComicAdapter.OnIt
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
-    }
+        }
 
-}
+        // Xử lý click vào Navigation
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        int id =item.getItemId();
+        if(id == R.id.nav_home){
+
+        }else if (id ==R.id.nav_categories){
+
+        }else if (id ==R.id.nav_favorite){
+
+        }else if (id ==R.id.nav_profile){
+
+        }else if (id ==R.id.nav_change_password){
+
+        }else if (id ==R.id.nav_settings){
+
+        }
+        return true;
+        }
+    }
