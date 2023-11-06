@@ -35,6 +35,7 @@ public class ViewComicDetails extends AppCompatActivity implements ChapterAdapte
 
     // Adapter
     ChapterAdapter chapteradapter;
+
     //Database
 
     Comic comic;

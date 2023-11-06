@@ -16,6 +16,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -34,9 +35,6 @@ public class ViewCategoryDetails extends AppCompatActivity implements ComicAdapt
     TextView txt;
 
     DatabaseReference databaseReference;
-    FirebaseAuth auth;
-    FirebaseDatabase database;
-
     List<Comic> comic;
 
     Tag tag;
@@ -49,35 +47,31 @@ public class ViewCategoryDetails extends AppCompatActivity implements ComicAdapt
 
         ivBack = findViewById(R.id.imgBack);
         ivBack.setOnClickListener(v -> finish());
-        UploadMangaItem();
+
+
+        String tag = getIntent().getStringExtra("category");
+        UploadComicItem(tag);
 
     }
 
-    private void UploadMangaItem() {
+    // Tải dữ liệu từ Firebase
+    private void UploadComicItem(String tag) {
        comic = new ArrayList<>();
 
         databaseReference = FirebaseDatabase.getInstance().getReference("Comic");
-        databaseReference.addValueEventListener(new ValueEventListener() {
+        Query query = databaseReference.orderByChild("category")
+                        .equalTo(tag);
+        query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(comic.size()!=0)
                     comic.clear();
                 for (DataSnapshot data : snapshot.getChildren()) {
                     Comic comicLoad = data.getValue(Comic.class);
-                    String[] category = Objects.requireNonNull(comicLoad).getCategory().split("/");
-
-                    tag = (Tag) getIntent().getSerializableExtra("category");
-                    for(String Cate : category){
-                        if(Cate.compareTo(tag.getTag()) == 0){
-                            comic.add(comicLoad);
-                            break;
-                        }
-                    }
-
+                    comic.add(comicLoad);
                 }
                 setComicAdapter(comic);
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 

@@ -24,10 +24,11 @@ import com.google.firebase.auth.FirebaseUser;
 public class screenDoiPass extends AppCompatActivity {
 
     TextInputEditText passwordET , passwordETNew;
-    Button buttonBack;
     ImageView btBack;
     FirebaseAuth mAuth;
 
+
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,7 +37,13 @@ public class screenDoiPass extends AppCompatActivity {
         EditText passwordET = findViewById(R.id.doipass);
         EditText passwordETNew = findViewById(R.id.doipassnew);
         Button buttonEdit = findViewById(R.id.doipass_btxacnhan);
-
+        btBack = findViewById(R.id.imgBack);
+        btBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         buttonEdit.setOnClickListener(new View.OnClickListener() {
             @Override

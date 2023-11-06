@@ -7,18 +7,21 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ImageView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import Adapter.CategoryAdapter;
+import Model.Comic;
 import Model.Tag;
 
 public class ViewCategory extends AppCompatActivity implements CategoryAdapter.OnItemCategoryClick {
@@ -38,7 +41,8 @@ public class ViewCategory extends AppCompatActivity implements CategoryAdapter.O
         ivBack = findViewById(R.id.imgBack);
         ivBack.setOnClickListener(v -> finish());
 
-        reference = FirebaseDatabase.getInstance().getReference("category");
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Category");
+
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -53,7 +57,7 @@ public class ViewCategory extends AppCompatActivity implements CategoryAdapter.O
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                Log.d("__index", "onCancelled: "+error.getMessage().toString());
             }
         });
     }
@@ -67,7 +71,7 @@ public class ViewCategory extends AppCompatActivity implements CategoryAdapter.O
     @Override
     public void onCategoryItemClick(int clickedItemIndex) {
         Intent intent = new Intent(ViewCategory.this, ViewCategoryDetails.class);
-        intent.putExtra("category", Category.get(clickedItemIndex));
+        intent.putExtra("category", Category.get(clickedItemIndex).getTag());
         startActivity(intent);
     }
 }

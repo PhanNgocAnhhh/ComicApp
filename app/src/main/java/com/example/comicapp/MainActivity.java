@@ -60,10 +60,9 @@ public class MainActivity extends AppCompatActivity implements ComicAdapter.OnIt
     List<Comic> comic;
     SearchView searchView;
 
-    TextView txtFullName, txtEmail;
+    TextView  txtEmail;
     FirebaseAuth auth;
     FirebaseUser user;
-    Button buttonlogout, buttonedit;
 
 
     @Override
@@ -161,7 +160,6 @@ public class MainActivity extends AppCompatActivity implements ComicAdapter.OnIt
         comicadapter.notifyDataSetChanged();
     }
 
-
     // Xử lý click vào truyện tranh
     @Override
     public void onItemComicClick(int clickedItemIndex) {
@@ -183,14 +181,12 @@ public class MainActivity extends AppCompatActivity implements ComicAdapter.OnIt
             @Override
             public boolean onQueryTextSubmit(String query) {
                 comicadapter.getFilter().filter(query);
-                getFilterComic(query);
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
                 comicadapter.getFilter().filter(newText);
-                getFilterComic(newText);
                 return false;
             }
         });
@@ -208,43 +204,19 @@ public class MainActivity extends AppCompatActivity implements ComicAdapter.OnIt
         super.onBackPressed();
     }
 
-    //nó đang ko load đc đoạn nànày à
-    //
-
-    // Lọc và tìm kiếm dữ liệu trên Realtime Database
-    private void getFilterComic(String query) {
-        databaseReference = FirebaseDatabase.getInstance().getReference("Comic");
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (comic.size() != 0)
-                    comic.clear();
-                for (DataSnapshot data : snapshot.getChildren()) {
-                    Comic comicLoad = data.getValue(Comic.class);
-                    if (comicLoad.getName().toLowerCase().contains(query)) {
-//                        String[] category = Objects.requireNonNull(manga).getCategory().split("/");
-                        comic.add(comicLoad);
-                    }
-                }
-                setComicAdapter(comic);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-            }
-        });
-    }
-
     // Xử lý click vào Navigation
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id =item.getItemId();
         if (id ==R.id.nav_categories){
-            startActivity(new Intent(MainActivity.this, ViewCategory.class));
-            drawerLayout.closeDrawer(GravityCompat.END);
-        }else if (id ==R.id.nav_change_password){
+            drawerLayout.closeDrawer(GravityCompat.START);
+            startActivity(new Intent(MainActivity.this,ViewCategory.class));
+
+        }
+        else if (id ==R.id.nav_change_password){
+            drawerLayout.closeDrawer(GravityCompat.START);
             startActivity(new Intent(MainActivity.this,screenDoiPass.class));
-            drawerLayout.closeDrawer(GravityCompat.END);
+
         }else if (id ==R.id.nav_logout){
             auth.signOut();
             finish();
@@ -252,8 +224,5 @@ public class MainActivity extends AppCompatActivity implements ComicAdapter.OnIt
         }
         return true;
     }
-    private void ShowNavigationBar() {
-        drawerLayout.openDrawer(GravityCompat.END);
-    }
 
-    }
+}

@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 public class Tag implements Serializable {
     private String tag;
+    private int id;
 
     public Tag() {
     }
@@ -20,5 +21,13 @@ public class Tag implements Serializable {
     public void setTag(String tag) {
 
         this.tag = tag;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }
