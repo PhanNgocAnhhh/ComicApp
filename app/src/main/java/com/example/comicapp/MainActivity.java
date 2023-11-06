@@ -208,6 +208,9 @@ public class MainActivity extends AppCompatActivity implements ComicAdapter.OnIt
         super.onBackPressed();
     }
 
+    //nó đang ko load đc đoạn nànày à
+    //
+
     // Lọc và tìm kiếm dữ liệu trên Realtime Database
     private void getFilterComic(String query) {
         databaseReference = FirebaseDatabase.getInstance().getReference("Comic");
