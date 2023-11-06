@@ -39,8 +39,11 @@ dependencies {
     implementation("com.google.android.material:material:1.10.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation(platform("com.google.firebase:firebase-bom:32.3.1"))
+
     // Add the Realtime Database SDK
     implementation("com.google.firebase:firebase-database")
+    implementation("com.google.firebase:firebase-auth:21.1.0")
+
     // Thư viện load ảnh Picasso
     implementation ("com.squareup.picasso:picasso:2.5.2")
     // PhotoView trong ViewPager

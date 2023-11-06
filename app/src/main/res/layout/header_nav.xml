@@ -22,26 +22,26 @@
 <!--        android:layout_alignParentRight="true"-->
 <!--        android:src="" />-->
 
+<!--    <TextView-->
+<!--        android:id="@+id/txt_nav_name"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="10dp"-->
+<!--        android:fontFamily="monospace"-->
+<!--        android:text="UserName"-->
+<!--        android:textColor="@color/white"-->
+<!--        android:textSize="20sp"-->
+<!--        android:textStyle="bold" />-->
 
     <TextView
-        android:id="@+id/txt_nav_name"
+        android:id="@+id/txt_nav_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:fontFamily="monospace"
-        android:text="UserName"
-        android:textColor="@color/white"
-        android:textSize="20sp"
-        android:textStyle="bold" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="15dp"
         android:fontFamily="monospace"
         android:text="mail"
         android:textColor="@color/white"
-        android:textSize="16sp"
+        android:textSize="24sp"
         android:textStyle="bold" />
 
 </LinearLayout>
