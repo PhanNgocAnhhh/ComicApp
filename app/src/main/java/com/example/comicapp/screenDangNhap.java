@@ -31,11 +31,6 @@ public class screenDangNhap extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
-        //khoi tao thang Pref (hinh nhu la khong can goi cung dc hay sao ay :v )
-        //Pref.getPref(this);
-
-
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if(currentUser != null){
             Intent intent = new Intent(getApplicationContext(),MainActivity.class);
