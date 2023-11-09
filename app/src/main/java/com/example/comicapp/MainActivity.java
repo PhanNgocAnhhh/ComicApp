@@ -104,11 +104,6 @@ public class MainActivity extends AppCompatActivity implements ComicAdapter.OnIt
         FirebaseDatabase.getInstance().getReference().child("Banner").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (isFinishing() || isDestroyed()){
-                    return;
-                }
-
-
                 for (DataSnapshot data : snapshot.getChildren()) {
                     bannerLoad.add(new SlideModel(data.child("url").getValue().toString(), ScaleTypes.CENTER_CROP));
                     mainslider.setImageList(bannerLoad, ScaleTypes.CENTER_CROP);
@@ -117,9 +112,6 @@ public class MainActivity extends AppCompatActivity implements ComicAdapter.OnIt
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                if (isFinishing() || isDestroyed()){
-                    return;
-                }
             }
         });
 
