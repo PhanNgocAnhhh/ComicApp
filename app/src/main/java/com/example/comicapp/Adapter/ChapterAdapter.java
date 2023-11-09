@@ -1,8 +1,7 @@
-package Adapter;
+package com.example.comicapp.Adapter;
 
 import android.content.Context;
 
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,11 +11,10 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.comicapp.R;
-import com.example.comicapp.ViewChapter;
 
 
 import java.util.List;
-import Model.Chapter;
+import com.example.comicapp.Model.Chapter;
 
 
 public class ChapterAdapter extends RecyclerView.Adapter<ChapterAdapter.ViewHolderChapter> {

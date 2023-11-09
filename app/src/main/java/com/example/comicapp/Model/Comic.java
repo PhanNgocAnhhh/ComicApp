@@ -1,4 +1,4 @@
-package Model;
+package com.example.comicapp.Model;
 
 import java.io.Serializable;
 import java.util.List;
@@ -23,6 +23,8 @@ public class Comic  implements Serializable {
         this.description = description;
         this.chapter = chapters;
     }
+
+
 
     public String getId() {
         return id;

@@ -5,13 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -21,11 +19,10 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
-import Adapter.ComicAdapter;
-import Model.Comic;
-import Model.Tag;
+import com.example.comicapp.Adapter.ComicAdapter;
+import com.example.comicapp.Model.Comic;
+import com.example.comicapp.Model.Tag;
 
 public class ViewCategoryDetails extends AppCompatActivity implements ComicAdapter.OnItemComicClick  {
 
@@ -52,7 +49,6 @@ public class ViewCategoryDetails extends AppCompatActivity implements ComicAdapt
         UploadComicItem(tag);
 
     }
-
 
     // Tải dữ liệu từ Firebase
     private void UploadComicItem(String tag) {
@@ -87,9 +83,9 @@ public class ViewCategoryDetails extends AppCompatActivity implements ComicAdapt
     }
 
     @Override
-    public void onItemComicClick(int clickedItemIndex) {
+    public void onItemComicClick(Comic comic, int index) {
         Intent intent = new Intent(ViewCategoryDetails.this, ViewComicDetails.class);
-        intent.putExtra("comic", comic.get(clickedItemIndex));
+        intent.putExtra("comic", comic);
         startActivity(intent);
     }
 }

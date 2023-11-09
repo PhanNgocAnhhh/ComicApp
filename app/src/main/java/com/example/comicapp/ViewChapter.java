@@ -6,12 +6,9 @@ import androidx.viewpager.widget.ViewPager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.denzcoskun.imageslider.adapters.ViewPagerAdapter;
-
-import Adapter.ViewChapterAdapter;
-import Model.Chapter;
+import com.example.comicapp.Adapter.ViewChapterAdapter;
+import com.example.comicapp.Model.Chapter;
 
 public class ViewChapter extends AppCompatActivity implements View.OnClickListener {
 

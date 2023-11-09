@@ -12,6 +12,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.comicapp.Utils.Pref;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
@@ -26,10 +27,15 @@ public class screenDangNhap extends AppCompatActivity {
     ProgressBar progressBar;
     TextView textView;
 
+
     @Override
     public void onStart() {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
+        //khoi tao thang Pref (hinh nhu la khong can goi cung dc hay sao ay :v )
+        //Pref.getPref(this);
+
+
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if(currentUser != null){
             Intent intent = new Intent(getApplicationContext(),MainActivity.class);
@@ -48,6 +54,13 @@ public class screenDangNhap extends AppCompatActivity {
         buttonLogin = findViewById(R.id.dangnhap_btxacnhan);
         progressBar = findViewById(R.id.progressBar);
         textView = findViewById(R.id.registerNow);
+
+
+        // lấy thông tin từ SharedPreferences và hiển thị lên TextView
+        String tk = Pref.getString(this,Pref.TAIKHOAN,"");
+        String mk = Pref.getString(this,Pref.MATKHAU,"");
+        editTextEmail.setText(tk);
+        editTextPassword.setText(mk);
 
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,6 +92,11 @@ public class screenDangNhap extends AppCompatActivity {
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 progressBar.setVisibility(View.GONE);
                                 if (task.isSuccessful()) {
+
+                                    //Gọi clas Pref khi đăng nhập thành công sẽ lưu vào
+                                    Pref.setString(screenDangNhap.this,Pref.TAIKHOAN,email);
+                                    Pref.setString(screenDangNhap.this,Pref.MATKHAU,password);
+
                                     Toast.makeText(getApplicationContext(),"Đăng nhập thành công",Toast.LENGTH_SHORT).show();
                                     Intent intent = new Intent(getApplicationContext(),MainActivity.class);
                                     startActivity(intent);

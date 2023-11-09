@@ -7,22 +7,20 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.ImageView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import Adapter.CategoryAdapter;
-import Model.Comic;
-import Model.Tag;
+import com.example.comicapp.Adapter.CategoryAdapter;
+
+import com.example.comicapp.Model.Tag;
 
 public class ViewCategory extends AppCompatActivity implements CategoryAdapter.OnItemCategoryClick {
 

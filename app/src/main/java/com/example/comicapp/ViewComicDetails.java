@@ -1,6 +1,5 @@
 package com.example.comicapp;
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
@@ -8,21 +7,16 @@ import android.widget.ImageView;
 
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.firebase.database.DatabaseReference;
-
 import com.squareup.picasso.Picasso;
 import java.util.List;
-import java.util.Objects;
 
-import Adapter.ChapterAdapter;
+import com.example.comicapp.Adapter.ChapterAdapter;
 
-import Adapter.ComicAdapter;
-import Model.Chapter;
-import Model.Comic;
+import com.example.comicapp.Model.Chapter;
+import com.example.comicapp.Model.Comic;
 
 public class ViewComicDetails extends AppCompatActivity implements ChapterAdapter.OnItemChapterClick  {
     //View

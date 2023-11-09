@@ -1,4 +1,4 @@
-package Adapter;
+package com.example.comicapp.Adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -13,7 +13,7 @@ import com.example.comicapp.R;
 
 import java.util.List;
 
-import Model.Tag;
+import com.example.comicapp.Model.Tag;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolderCate> {
 

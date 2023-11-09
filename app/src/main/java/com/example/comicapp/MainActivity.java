@@ -7,21 +7,15 @@ import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.fragment.app.Fragment;
 
-import android.annotation.SuppressLint;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.denzcoskun.imageslider.ImageSlider;
@@ -38,10 +32,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
-import Adapter.ComicAdapter;
-import Model.Comic;
+import com.example.comicapp.Adapter.ComicAdapter;
+import com.example.comicapp.Model.Comic;
 
 public class MainActivity extends AppCompatActivity implements ComicAdapter.OnItemComicClick, NavigationView.OnNavigationItemSelectedListener {
 
@@ -111,6 +104,11 @@ public class MainActivity extends AppCompatActivity implements ComicAdapter.OnIt
         FirebaseDatabase.getInstance().getReference().child("Banner").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (isFinishing() || isDestroyed()){
+                    return;
+                }
+
+
                 for (DataSnapshot data : snapshot.getChildren()) {
                     bannerLoad.add(new SlideModel(data.child("url").getValue().toString(), ScaleTypes.CENTER_CROP));
                     mainslider.setImageList(bannerLoad, ScaleTypes.CENTER_CROP);
@@ -119,7 +117,9 @@ public class MainActivity extends AppCompatActivity implements ComicAdapter.OnIt
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                if (isFinishing() || isDestroyed()){
+                    return;
+                }
             }
         });
 
@@ -162,18 +162,11 @@ public class MainActivity extends AppCompatActivity implements ComicAdapter.OnIt
         comicadapter.notifyDataSetChanged();
     }
 
-    // Xử lý click vào truyện tranh
-    @Override
-    public void onItemComicClick(int clickedItemIndex) {
-        Intent intent = new Intent(MainActivity.this, ViewComicDetails.class);
-        intent.putExtra("comic", comic.get(clickedItemIndex));
-        startActivity(intent);
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
-        // Tìm kiếm dữ liệu trên Toolbar
+        // Tìm kiếm truyện
         getMenuInflater().inflate(R.menu.search, menu);
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
@@ -227,4 +220,12 @@ public class MainActivity extends AppCompatActivity implements ComicAdapter.OnIt
         return true;
     }
 
+    @Override
+    public void onItemComicClick(Comic data, int index) {
+        Intent intent = new Intent(MainActivity.this, ViewComicDetails.class);
+        //code ban dau la lay item cho nay
+         // Comic a = comic.get(index);
+        intent.putExtra("comic", data);
+        startActivity(intent);
+    }
 }

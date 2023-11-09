@@ -1,31 +1,25 @@
-package Adapter;
+package com.example.comicapp.Adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.comicapp.R;
-import com.example.comicapp.ViewChapter;
-import com.example.comicapp.ViewComicDetails;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import Model.Comic;
+import com.example.comicapp.Model.Comic;
 
 public class ComicAdapter extends RecyclerView.Adapter<ComicAdapter.MyViewHolder> implements Filterable {
 
@@ -96,7 +90,12 @@ public class ComicAdapter extends RecyclerView.Adapter<ComicAdapter.MyViewHolder
         Picasso.get().load(comicList.get(position).image).into(holder.comic_image);
         // Hiển thị tên lên view
         holder.comic_name.setText(comicList.get(position).name);
-
+       holder.itemView.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               OnClick.onItemComicClick(comic, holder.getAdapterPosition());
+           }
+       });
     }
     @Override
     public int getItemCount() {
@@ -104,26 +103,26 @@ public class ComicAdapter extends RecyclerView.Adapter<ComicAdapter.MyViewHolder
     }
 
     public static interface OnItemComicClick{
-        void onItemComicClick(int clickedItemIndex);
+        void onItemComicClick(Comic comic,int index);
     }
-    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class MyViewHolder extends RecyclerView.ViewHolder {
          TextView comic_name;
          ImageView comic_image;
+
 
 
         public MyViewHolder (@NonNull View itemView) {
              super(itemView);
              comic_name = itemView.findViewById(R.id.txt_comic_name);
              comic_image =itemView.findViewById(R.id.img_comic);
-             itemView.setOnClickListener(this);
+
+
+
+
+
          }
 
-        @Override
-        public void onClick(View v) {
-            int clickedPosition = getAdapterPosition();
-            OnClick.onItemComicClick(clickedPosition);
 
-        }
     }
 
 }
