@@ -29,7 +29,6 @@ public class ViewCategory extends AppCompatActivity implements CategoryAdapter.O
     RecyclerView rcvCate;
     CategoryAdapter adapter;
     List<Tag> Category;
-    DatabaseReference reference;
     ImageView ivBack;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +56,6 @@ public class ViewCategory extends AppCompatActivity implements CategoryAdapter.O
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Log.d("__index", "onCancelled: "+error.getMessage().toString());
             }
         });
     }

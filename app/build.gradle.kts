@@ -42,6 +42,7 @@ dependencies {
 
     // Add the Realtime Database SDK
     implementation("com.google.firebase:firebase-database")
+    // Authentication
     implementation("com.google.firebase:firebase-auth:21.1.0")
 
     // Thư viện load ảnh Picasso

@@ -48,11 +48,11 @@ public class ViewCategoryDetails extends AppCompatActivity implements ComicAdapt
         ivBack = findViewById(R.id.imgBack);
         ivBack.setOnClickListener(v -> finish());
 
-
         String tag = getIntent().getStringExtra("category");
         UploadComicItem(tag);
 
     }
+
 
     // Tải dữ liệu từ Firebase
     private void UploadComicItem(String tag) {

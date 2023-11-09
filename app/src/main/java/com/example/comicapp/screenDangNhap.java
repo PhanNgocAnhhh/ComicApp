@@ -85,7 +85,7 @@ public class screenDangNhap extends AppCompatActivity {
                                     finish();
 
                                 } else {
-                                    Toast.makeText(screenDangNhap.this, "Authentication failed.",
+                                    Toast.makeText(screenDangNhap.this, "Sai thông tin hoặc mật khẩu",
                                             Toast.LENGTH_SHORT).show();
                                 }
                             }
