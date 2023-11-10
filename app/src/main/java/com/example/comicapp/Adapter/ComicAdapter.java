@@ -90,6 +90,7 @@ public class ComicAdapter extends RecyclerView.Adapter<ComicAdapter.MyViewHolder
         Picasso.get().load(comicList.get(position).image).into(holder.comic_image);
         // Hiển thị tên lên view
         holder.comic_name.setText(comicList.get(position).name);
+
        holder.itemView.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
@@ -109,16 +110,10 @@ public class ComicAdapter extends RecyclerView.Adapter<ComicAdapter.MyViewHolder
          TextView comic_name;
          ImageView comic_image;
 
-
-
         public MyViewHolder (@NonNull View itemView) {
              super(itemView);
              comic_name = itemView.findViewById(R.id.txt_comic_name);
              comic_image =itemView.findViewById(R.id.img_comic);
-
-
-
-
 
          }
 

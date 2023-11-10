@@ -215,8 +215,6 @@ public class MainActivity extends AppCompatActivity implements ComicAdapter.OnIt
     @Override
     public void onItemComicClick(Comic data, int index) {
         Intent intent = new Intent(MainActivity.this, ViewComicDetails.class);
-        //code ban dau la lay item cho nay
-         // Comic a = comic.get(index);
         intent.putExtra("comic", data);
         startActivity(intent);
     }
