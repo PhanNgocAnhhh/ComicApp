@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.media.Image;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -73,12 +74,18 @@ public class screenDoiPass extends AppCompatActivity {
                                     @Override
                                     public void onSuccess(Void aVoid) {
                                         Toast.makeText(screenDoiPass.this,"mật khẩu được cập nhập",Toast.LENGTH_LONG).show();
+                                        Intent intent = new Intent(getApplicationContext(),screenDangNhap.class);
+                                        startActivity(intent);
+                                        finish();
                                     }
                                 })
                                 .addOnFailureListener(new OnFailureListener() {
                                     @Override
                                     public void onFailure(@NonNull Exception e) {
                                         Toast.makeText(screenDoiPass.this,""+e.getMessage(),Toast.LENGTH_LONG).show();
+                                        Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+                                        startActivity(intent);
+                                        finish();
                                     }
                                 });
                     }
@@ -87,6 +94,9 @@ public class screenDoiPass extends AppCompatActivity {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         Toast.makeText(screenDoiPass.this,""+e.getMessage(),Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+                        startActivity(intent);
+                        finish();
                     }
                 });
     }
